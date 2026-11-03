@@ -1,0 +1,1070 @@
+{
+  "package": "@arki/fs",
+  "version": "0.2.0",
+  "entries": [
+    {
+      "subpath": "./env",
+      "name": "env",
+      "kind": "variable",
+      "signature": "export declare const env: Readonly<{ NODE_ENV: \"development\" | \"production\" | \"test\"; AWS_ACCESS_KEY_ID?: string | undefined; AWS_SECRET_ACCESS_KEY?: string | undefined; AWS_SESSION_TOKEN?: string | undefined; AWS_REGION: string; AWS_S3_BUCKET_NAME?: string | undefined; AWS_S3_PATH_PREFIX?: string | undefined; AWS_ENDPOINT_URL?: string | undefined; }>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "CONFIRM_UPLOAD_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const CONFIRM_UPLOAD_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.upload_pending\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.upload_mismatch\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; reason: string; }, { fileId: `fil_${string}`; reason: string; }>>, import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "CREATE_UPLOAD_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const CREATE_UPLOAD_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": "Declared refusals of upload creation, including failure before an object key or row exists."
+    },
+    {
+      "subpath": "./files",
+      "name": "FILE_ERROR_CODES",
+      "kind": "variable",
+      "signature": "export declare const FILE_ERROR_CODES: { /** Bad input or config: TTL over the cap, size over the limit, mime not allowed. * @fix Correct the requested TTL, file size, MIME type or storage configuration to match the configured limits. * @verify bun run test -- src/files/files.test.ts */ readonly invalid: 'ARKI_FS_E001'; /** The adapter cannot sign uploads (the local adapter). * @fix Use an adapter supporting signed uploads, or upload through the local adapter supported path. * @verify bun run test -- src/files/files.test.ts */ readonly unsupported: 'ARKI_FS_E006'; };",
+      "jsdocSummary": "Stable error codes of `@arki/fs/files` and `@arki/fs/pg`. E002–E005 and E007 are retired: those outcomes are returned failures now."
+    },
+    {
+      "subpath": "./files",
+      "name": "FILE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const FILE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "FILE_URL_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const FILE_URL_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "FileErrorCode",
+      "kind": "type",
+      "signature": "export type FileErrorCode = (typeof FILE_ERROR_CODES)[keyof typeof FILE_ERROR_CODES];",
+      "jsdocSummary": "The code of a {@link FileStorageError}."
+    },
+    {
+      "subpath": "./files",
+      "name": "fileId",
+      "kind": "variable",
+      "signature": "export declare const fileId: import(\"@arki/contracts\").IdDeclaration<\"fil_\">;",
+      "jsdocSummary": "The id of a stored file: `fil_` plus 24 random characters."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileId",
+      "kind": "type",
+      "signature": "export type FileId = IdOf<typeof fileId>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "fileRecord",
+      "kind": "variable",
+      "signature": "export declare const fileRecord: z.ZodObject<{ id: z.ZodTemplateLiteral<`fil_${string}`>; mime: z.ZodString; size: z.ZodNumber; sha256: z.ZodNullable<z.ZodString>; status: z.ZodEnum<{ deleting: \"deleting\"; pending: \"pending\"; ready: \"ready\"; }>; createdAt: z.ZodISODateTime; }, z.core.$strict>;",
+      "jsdocSummary": "What clients see of a file. No bucket, key, owner or etag."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileRecord",
+      "kind": "type",
+      "signature": "export type FileRecord = z.infer<typeof fileRecord>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "fileStatus",
+      "kind": "variable",
+      "signature": "export declare const fileStatus: z.ZodEnum<{ deleting: \"deleting\"; pending: \"pending\"; ready: \"ready\"; }>;",
+      "jsdocSummary": "`pending` until the server saw the object; `ready` after; `deleting` until the sweep removes row and object."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileStatus",
+      "kind": "type",
+      "signature": "export type FileStatus = z.infer<typeof fileStatus>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "fileStorageError",
+      "kind": "variable",
+      "signature": "export declare const fileStorageError: z.ZodInstanceOf<FileStorageError>;",
+      "jsdocSummary": "Source schema that recognises a {@link FileStorageError} (A-39: schemas own the check on unknown values)."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileStorageError",
+      "kind": "class",
+      "signature": "export declare class FileStorageError extends Error { readonly code: FileErrorCode; constructor(code: FileErrorCode, message: string, options?: { cause?: unknown; }); }",
+      "jsdocSummary": "A coded failure of the files table or one of its adapters."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileUnavailable",
+      "kind": "variable",
+      "signature": "export declare const FileUnavailable: import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>;",
+      "jsdocSummary": "The file is missing, belongs to another bucket binding, or the policy denied the call. One failure for all three on purpose, so a caller cannot probe which files exist; the debug log says which it was. `fileId` is the id the caller asked for, and is absent when the policy refused a new upload."
+    },
+    {
+      "subpath": "./files",
+      "name": "FileWrongState",
+      "kind": "variable",
+      "signature": "export declare const FileWrongState: import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>;",
+      "jsdocSummary": "The file is not in the state the call needs: a URL for a file that is not ready, a confirm on a file being deleted, or a confirm after the window passed. The debug log says which."
+    },
+    {
+      "subpath": "./files",
+      "name": "mimeSchema",
+      "kind": "variable",
+      "signature": "export declare const mimeSchema: z.ZodString;",
+      "jsdocSummary": "A plain `type/subtype`. No parameters, no control characters."
+    },
+    {
+      "subpath": "./files",
+      "name": "REMOVE_FILE_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const REMOVE_FILE_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "signedFileUrl",
+      "kind": "variable",
+      "signature": "export declare const signedFileUrl: z.ZodObject<{ url: z.ZodURL; expiresAt: z.ZodISODateTime; }, z.core.$strict>;",
+      "jsdocSummary": "A GET URL and the moment it stops working, so screens can refresh before then."
+    },
+    {
+      "subpath": "./files",
+      "name": "SignedFileUrl",
+      "kind": "type",
+      "signature": "export type SignedFileUrl = z.infer<typeof signedFileUrl>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "STORAGE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": "Read/signing operations perform no external write."
+    },
+    {
+      "subpath": "./files",
+      "name": "STORAGE_WRITE_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_WRITE_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": "Dispatched writes preserve uncertainty instead of claiming that nothing happened."
+    },
+    {
+      "subpath": "./files",
+      "name": "StorageCancelled",
+      "kind": "variable",
+      "signature": "export declare const StorageCancelled: import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>;",
+      "jsdocSummary": "Cancellation prevented the next phase or stopped a read; acknowledged earlier writes remain."
+    },
+    {
+      "subpath": "./files",
+      "name": "StorageNotFound",
+      "kind": "variable",
+      "signature": "export declare const StorageNotFound: import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>;",
+      "jsdocSummary": "The requested local file does not exist."
+    },
+    {
+      "subpath": "./files",
+      "name": "StorageRejected",
+      "kind": "variable",
+      "signature": "export declare const StorageRejected: import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>;",
+      "jsdocSummary": "Storage explicitly refused an operation without confirming a write."
+    },
+    {
+      "subpath": "./files",
+      "name": "StorageUnavailable",
+      "kind": "variable",
+      "signature": "export declare const StorageUnavailable: import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>;",
+      "jsdocSummary": "A read could not reach its storage backend."
+    },
+    {
+      "subpath": "./files",
+      "name": "StorageWriteUncertain",
+      "kind": "variable",
+      "signature": "export declare const StorageWriteUncertain: import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>;",
+      "jsdocSummary": "An external write may have happened, but its final state was not confirmed."
+    },
+    {
+      "subpath": "./files",
+      "name": "UPLOAD_FILE_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const UPLOAD_FILE_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.upload_pending\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>, import(\"@arki/failure\").FailureDefinition<\"fs.upload_mismatch\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; reason: string; }, { fileId: `fil_${string}`; reason: string; }>>, import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadClient",
+      "kind": "type",
+      "signature": "export type UploadClient = { createUpload(input: UploadRequest): Promise<UploadTicket | FailureOf<(typeof CREATE_UPLOAD_FAILURES)[number]>>; confirmUpload(input: { fileId: FileId; }): Promise<FileRecord | FailureOf<(typeof CONFIRM_UPLOAD_FAILURES)[number]>>; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "uploadFile",
+      "kind": "function",
+      "signature": "export declare function uploadFile(client: UploadClient, blob: Blob, options?: UploadFileOptions): Promise<import(\"@arki/failure\").Failure<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.file_unavailable\", { fileId?: `fil_${string}` | undefined; }> | import(\"@arki/failure\").Failure<\"fs.file_wrong_state\", { fileId: `fil_${string}`; }> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").Failure<\"fs.upload_mismatch\", { fileId: `fil_${string}`; reason: string; }> | import(\"@arki/failure\").Failure<\"fs.upload_pending\", { fileId: `fil_${string}`; }> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | { id: `fil_${string}`; mime: string; size: number; sha256: string | null; status: \"deleting\" | \"pending\" | \"ready\"; createdAt: string; }>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadFileOptions",
+      "kind": "type",
+      "signature": "export type UploadFileOptions = { onProgress?: (sent: number, total: number) => unknown; signal?: AbortSignal; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadMismatch",
+      "kind": "variable",
+      "signature": "export declare const UploadMismatch: import(\"@arki/failure\").FailureDefinition<\"fs.upload_mismatch\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; reason: string; }, { fileId: `fil_${string}`; reason: string; }>>;",
+      "jsdocSummary": "The stored size, type or hash differs from the upload request. The row is now deleting."
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadPending",
+      "kind": "variable",
+      "signature": "export declare const UploadPending: import(\"@arki/failure\").FailureDefinition<\"fs.upload_pending\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>>;",
+      "jsdocSummary": "Confirm came before the PUT finished. The row stays pending, so confirming again later is fine."
+    },
+    {
+      "subpath": "./files",
+      "name": "uploadRequest",
+      "kind": "variable",
+      "signature": "export declare const uploadRequest: z.ZodObject<{ mime: z.ZodString; size: z.ZodNumber; }, z.core.$strict>;",
+      "jsdocSummary": "What a client asks for before it uploads."
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadRequest",
+      "kind": "type",
+      "signature": "export type UploadRequest = { mime: string; size: number; };",
+      "jsdocSummary": "What a client asks for before it uploads. An exact type test locks `uploadRequest` to this type."
+    },
+    {
+      "subpath": "./files",
+      "name": "uploadTicket",
+      "kind": "variable",
+      "signature": "export declare const uploadTicket: z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; url: z.ZodURL; method: z.ZodLiteral<\"PUT\">; headers: z.ZodRecord<z.ZodString, z.ZodString>; expiresAt: z.ZodISODateTime; }, z.core.$strict>;",
+      "jsdocSummary": "A signed, create-only PUT grant. Send `headers` unchanged."
+    },
+    {
+      "subpath": "./files",
+      "name": "UploadTicket",
+      "kind": "type",
+      "signature": "export type UploadTicket = z.infer<typeof uploadTicket>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./local/delete",
+      "name": "deleteAsync",
+      "kind": "function",
+      "signature": "export function deleteAsync( patterns: string | readonly string[], options?: Options ): Promise<string[]>;",
+      "jsdocSummary": "Delete files and directories using glob patterns."
+    },
+    {
+      "subpath": "./local/delete",
+      "name": "deleteSync",
+      "kind": "function",
+      "signature": "export function deleteSync( patterns: string | readonly string[], options?: Options ): string[];",
+      "jsdocSummary": "Synchronously delete files and directories using glob patterns."
+    },
+    {
+      "subpath": "./local/delete",
+      "name": "Options",
+      "kind": "type",
+      "signature": "export type Options = { /** Allow deleting the current working directory and outside. @default false */ readonly force?: boolean; /** See what would be deleted. @default false @example ``` import {deleteAsync} from 'del'; const deletedPaths = await deleteAsync(['temp/*.js'], {dryRun: true}); console.log('Files and directories that would be deleted:\\n', deletedPaths.join('\\n')); ``` */ readonly dryRun?: boolean; /** Concurrency limit. Minimum: `1`. @default Infinity */ readonly concurrency?: number; /** Called after each file or directory is deleted. @example ``` import {deleteAsync} from 'del'; await deleteAsync(patterns, { onProgress: progress => { // … }}); ``` */ readonly onProgress?: (progress: ProgressData) => void; } & GlobbyOptions;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./local/delete",
+      "name": "ProgressData",
+      "kind": "type",
+      "signature": "export type ProgressData = { /** Deleted files and directories count. */ readonly deletedCount: number; /** Total files and directories count. */ readonly totalCount: number; /** Completed percentage. A value between `0` and `1`. */ readonly percent: number; /** The absolute path of the deleted file or directory. It will not be present if nothing was deleted. */ readonly path?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./local/dir",
+      "name": "getParentDirName",
+      "kind": "variable",
+      "signature": "export declare const getParentDirName: (m: string) => string;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./local/glob",
+      "name": "glob",
+      "kind": "variable",
+      "signature": "export declare const glob: typeof glob_ & { glob: typeof glob_; globSync: typeof globSync; sync: typeof globSync & { stream: typeof globStreamSync; iterate: typeof globIterateSync; }; globStream: typeof globStream; stream: typeof globStream & { sync: typeof globStreamSync; }; globStreamSync: typeof globStreamSync; streamSync: typeof globStreamSync; globIterate: typeof globIterate; iterate: typeof globIterate & { sync: typeof globIterateSync; }; globIterateSync: typeof globIterateSync; iterateSync: typeof globIterateSync; Glob: typeof Glob; hasMagic: (pattern: string | string[], options?: GlobOptions) => boolean; escape: (s: string, { windowsPathsNoEscape, magicalBraces, }?: Pick<import(\"minimatch\").MinimatchOptions, \"windowsPathsNoEscape\" | \"magicalBraces\">) => string; unescape: (s: string, { windowsPathsNoEscape, magicalBraces, }?: Pick<import(\"minimatch\").MinimatchOptions, \"windowsPathsNoEscape\" | \"magicalBraces\">) => string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./local/glob",
+      "name": "globIterate",
+      "kind": "function",
+      "signature": "export declare function globIterate(pattern: string | string[], options?: GlobOptionsWithFileTypesUnset | undefined): AsyncGenerator<string, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptionsWithFileTypesTrue): AsyncGenerator<Path, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptionsWithFileTypesFalse): AsyncGenerator<string, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptions): AsyncGenerator<Path, void, void> | AsyncGenerator<string, void, void>;",
+      "jsdocSummary": "Return an async iterator for walking glob pattern matches."
+    },
+    {
+      "subpath": "./local/glob",
+      "name": "globStream",
+      "kind": "function",
+      "signature": "export declare function globStream(pattern: string | string[], options: GlobOptionsWithFileTypesFalse): Minipass<string, string>; ; export declare function globStream(pattern: string | string[], options: GlobOptionsWithFileTypesTrue): Minipass<Path, Path>; ; export declare function globStream(pattern: string | string[], options?: GlobOptionsWithFileTypesUnset | undefined): Minipass<string, string>; ; export declare function globStream(pattern: string | string[], options: GlobOptions): Minipass<Path, Path> | Minipass<string, string>;",
+      "jsdocSummary": "Return a stream that emits all the strings or `Path` objects and then emits `end` when completed."
+    },
+    {
+      "subpath": "./local/read-file",
+      "name": "readFile",
+      "kind": "variable",
+      "signature": "export declare const readFile: (pathToFile: string, encoding: string) => string;",
+      "jsdocSummary": "Reads a whole file synchronously and decodes it. This is a load-time reader (bundled data files), so it keeps a documented throw instead of returning a failure."
+    },
+    {
+      "subpath": "./local/read-first-line",
+      "name": "readFirstLine",
+      "kind": "function",
+      "signature": "export declare function readFirstLine(pathToFile: string, options?: { signal?: AbortSignal; }): Promise<string | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_not_found\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | undefined>;",
+      "jsdocSummary": "The first line, or undefined for an empty file. Every terminal path closes the stream."
+    },
+    {
+      "subpath": "./local/write",
+      "name": "writeToTheFileEnd",
+      "kind": "function",
+      "signature": "function appendFile( path: PathLike | FileHandle, data: | string | NodeJS.ArrayBufferView | Iterable<string | NodeJS.ArrayBufferView> | AsyncIterable<string | NodeJS.ArrayBufferView>, options?: (ObjectEncodingOptions & FlagAndOpenMode & { flush?: boolean | undefined }) | BufferEncoding | null, ): Promise<void>;",
+      "jsdocSummary": "Asynchronously append data to a file, creating the file if it does not yet exist. `data` can be a string or a `Buffer`."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "filesContract",
+      "kind": "variable",
+      "signature": "export declare const filesContract: { createUpload: import(\"@orpc/contract\").ContractProcedureBuilderWithInputOutput<z.ZodObject<{ mime: z.ZodString; size: z.ZodNumber; }, z.core.$strict>, z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; url: z.ZodURL; method: z.ZodLiteral<\"PUT\">; headers: z.ZodRecord<z.ZodString, z.ZodString>; expiresAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; confirmUpload: import(\"@orpc/contract\").ContractProcedureBuilderWithInputOutput<z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; }, z.core.$strict>, z.ZodObject<{ id: z.ZodTemplateLiteral<`fil_${string}`>; mime: z.ZodString; size: z.ZodNumber; sha256: z.ZodNullable<z.ZodString>; status: z.ZodEnum<{ deleting: \"deleting\"; pending: \"pending\"; ready: \"ready\"; }>; createdAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.upload_mismatch\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; reason: string; }, { fileId: `fil_${string}`; reason: string; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.upload_pending\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; url: import(\"@orpc/contract\").ContractProcedureBuilderWithInputOutput<z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; expiresIn: z.ZodOptional<z.ZodNumber>; }, z.core.$strict>, z.ZodObject<{ url: z.ZodURL; expiresAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; remove: import(\"@orpc/contract\").ContractProcedureBuilderWithInputOutput<z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; }, z.core.$strict>, z.ZodVoid, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./orpc",
+      "name": "FilesContract",
+      "kind": "type",
+      "signature": "export type FilesContract = typeof filesContract;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./orpc",
+      "name": "filesRouter",
+      "kind": "function",
+      "signature": "export declare function filesRouter<TInitialContext extends Context, TCurrentContext extends Context, T extends FilesTable>(implementer: ImplementerInternal<FilesContract, TInitialContext, TCurrentContext>, bind: { storage: (context: TCurrentContext) => FileStorage<T>; actor: (context: TCurrentContext) => OwnerOf<T>; }): { createUpload: import(\"@orpc/server\").ImplementedProcedure<TInitialContext, TCurrentContext, z.ZodObject<{ mime: z.ZodString; size: z.ZodNumber; }, z.core.$strict>, z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; url: z.ZodURL; method: z.ZodLiteral<\"PUT\">; headers: z.ZodRecord<z.ZodString, z.ZodString>; expiresAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; confirmUpload: import(\"@orpc/server\").ImplementedProcedure<TInitialContext, TCurrentContext, z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; }, z.core.$strict>, z.ZodObject<{ id: z.ZodTemplateLiteral<`fil_${string}`>; mime: z.ZodString; size: z.ZodNumber; sha256: z.ZodNullable<z.ZodString>; status: z.ZodEnum<{ deleting: \"deleting\"; pending: \"pending\"; ready: \"ready\"; }>; createdAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.upload_mismatch\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; reason: string; }, { fileId: `fil_${string}`; reason: string; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.upload_pending\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; url: import(\"@orpc/server\").ImplementedProcedure<TInitialContext, TCurrentContext, z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; expiresIn: z.ZodOptional<z.ZodNumber>; }, z.core.$strict>, z.ZodObject<{ url: z.ZodURL; expiresAt: z.ZodISODateTime; }, z.core.$strict>, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.file_wrong_state\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId: `fil_${string}`; }, { fileId: `fil_${string}`; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; remove: import(\"@orpc/server\").ImplementedProcedure<TInitialContext, TCurrentContext, z.ZodObject<{ fileId: z.ZodTemplateLiteral<`fil_${string}`>; }, z.core.$strict>, z.ZodVoid, import(\"@orpc/contract\").MergedErrorMap<Record<never, never>, import(\"@arki/failure/orpc\").ErrorMapOf<readonly (import(\"@arki/failure\").FailureDefinition<\"contracts.random_source_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.file_unavailable\", import(\"@standard-schema/spec\").StandardSchemaV1<{ fileId?: `fil_${string}` | undefined; }, { fileId?: `fil_${string}` | undefined; }>> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined> | import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>> | import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>)[]>>, Record<never, never>>; };",
+      "jsdocSummary": "The handlers of {@link filesContract}. `storage` returns the service built once at boot; `actor` returns the acting owner id (throw `UNAUTHORIZED` there when there is none)."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "filesUploadClient",
+      "kind": "function",
+      "signature": "export declare function filesUploadClient(client: UploadClient): UploadClient;",
+      "jsdocSummary": "Restore native oRPC rejection at the explicit client bridge before uploadFile owns execution."
+    },
+    {
+      "subpath": "./pg",
+      "name": "CleanupOptions",
+      "kind": "type",
+      "signature": "export type CleanupOptions = { batch?: number; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./pg",
+      "name": "CleanupResult",
+      "kind": "type",
+      "signature": "export type CleanupResult = { removed: number; failed: number; more: boolean; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./pg",
+      "name": "FilePolicy",
+      "kind": "type",
+      "signature": "export type FilePolicy<T extends FilesTable> = { /** Default: everyone may create. */ canCreate?: (actor: OwnerOf<T>, request: UploadRequest) => boolean | Promise<boolean>; /** Default: the owner only. */ canRead?: (file: FileRow<T>, actor: OwnerOf<T>) => boolean | Promise<boolean>; /** Default: the owner only. */ canRemove?: (file: FileRow<T>, actor: OwnerOf<T>) => boolean | Promise<boolean>; };",
+      "jsdocSummary": "Who may do what. Every check gets the acting owner id."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FileRow",
+      "kind": "type",
+      "signature": "export type FileRow<T extends FilesTable> = T['$inferSelect'];",
+      "jsdocSummary": "A row of the files table `T`."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FilesDb",
+      "kind": "type",
+      "signature": "export type FilesDb = PgAsyncDatabase<PgQueryResultHKT, AnyRelations>;",
+      "jsdocSummary": "The root Drizzle database (`PgAsyncDatabase`, as in `@arki/journal`). Pass the root handle, never a transaction: storage I/O must not run inside one."
+    },
+    {
+      "subpath": "./pg",
+      "name": "filesTable",
+      "kind": "function",
+      "signature": "export declare function filesTable<D extends Dialect, TOwner extends string>(c: ColumnKit<D>, options: FilesTableOptions<TOwner>): import(\"@arki/db/columns\").TableOf<D, string, { /** `fil_` + 24 random characters. */ id: import(\"@arki/db/columns\").ColumnSpec<D, \"id\", Omit<import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { primaryKey: true; }, \"type\"> & { type: `fil_${string}`; } & { default: true; defaultFn: true; }>; ownerId: import(\"@arki/db/columns\").ColumnSpec<D, \"id\", Omit<import(\"@arki/db/columns\").NoFlags & { notNull: true; }, \"type\"> & { type: TOwner; }>; /** The binding name from `fileStorage(..., { bucket })`, e.g. `'uploads'`. */ bucket: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** `${keyPrefix}/${id}`. Derived by the server, never sent by a client. */ key: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; mime: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; size: import(\"@arki/db/columns\").ColumnSpec<D, \"bigint\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** Lowercase hex. Only set with `verify: 'hash'`. */ sha256: import(\"@arki/db/columns\").ColumnSpec<D, \"char\", { enum: [string, ...string[]]; }>; etag: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", { enum: [string, ...string[]]; }>; status: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", { enum: [\"pending\", \"ready\", \"deleting\"]; } & { notNull: true; } & { default: true; }>; /** When the PUT URL dies (database time). */ expiresAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** When the sweep may act. Null on ready rows. */ cleanupAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags>; cleanupAttempts: import(\"@arki/db/columns\").ColumnSpec<D, \"integer\", import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { default: true; }>; createdAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { default: true; }>; confirmedAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags>; }>;",
+      "jsdocSummary": "The files table: one row per stored object, written before any byte is. No foreign key on `owner_id`: deleting an owner must not drop the row that carries the cleanup duty. The kit picks the dialect and where the table lives: `pgColumns(schema?)` or `sqliteColumns({ prefix? })`."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FilesTable",
+      "kind": "type",
+      "signature": "export type FilesTable<D extends Dialect = Dialect, TOwner extends string = string> = D extends Dialect ? ReturnType<typeof filesTable<D, TOwner>> : never;",
+      "jsdocSummary": "The files table of dialect `D` with owner ids `TOwner`. The defaults give any files table: use it as the bound of generic code, `T extends FilesTable`. Distributed over `D`, so the default is one table per dialect, never one table of a mixed dialect."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FilesTableOptions",
+      "kind": "type",
+      "signature": "export type FilesTableOptions<TOwner extends string> = { /** The owner id kind, e.g. the app's `defineId('usr_')`. Its type becomes `ownerId`'s type. */ owner: IdColumnSource<TOwner>; /** Table name. Default `'files'`. Also prefixes the constraint and index names. */ name?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./pg",
+      "name": "fileStorage",
+      "kind": "function",
+      "signature": "export declare function fileStorage<T extends FilesTable<'pg'>>(db: FilesDb, adapter: SignedUploadAdapter, options: FileStorageOptions<T>): FileStorage<T>;",
+      "jsdocSummary": "Builds the files lifecycle once, at boot. Synchronous and cheap: it only validates `options` (`ARKI_FS_E001`) and the adapter (`ARKI_FS_E006`)."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FileStorage",
+      "kind": "type",
+      "signature": "export type FileStorage<T extends FilesTable> = ReturnType<typeof createFileStorage<T>>;",
+      "jsdocSummary": "Inferred from the owned implementation; underlying Failure kinds cannot be erased."
+    },
+    {
+      "subpath": "./pg",
+      "name": "FileStorageOptions",
+      "kind": "type",
+      "signature": "export type FileStorageOptions<T extends FilesTable> = { files: T; /** Stable binding name stored in every row, e.g. `'uploads'`. Rows of another binding are invisible. */ bucket: string; /** Key prefix. Default `'files'`. Keys are `${keyPrefix}/${fileId}`. */ keyPrefix?: string; /** Required. `allowedMime` takes exact types and `type/*` wildcards. */ limits: { maxSize: number; allowedMime: readonly string[]; }; /** Life of a PUT URL. Default 300. */ uploadTtlSeconds?: number; /** Default life of a GET URL. Default 300. */ urlTtlSeconds?: number; /** Longest GET URL a caller may ask for; longer is rejected, never clamped. Default 3600. */ maxUrlTtlSeconds?: number; /** How long after a PUT URL expires an upload may still land. Default 900. */ graceSeconds?: number; /** `'head'` (default) checks size and type; `'hash'` also downloads the object and stores its SHA-256. */ verify?: 'head' | 'hash'; policy?: FilePolicy<T>; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./pg",
+      "name": "OwnerOf",
+      "kind": "type",
+      "signature": "export type OwnerOf<T extends FilesTable> = FileRow<T>['ownerId'];",
+      "jsdocSummary": "The owner id type of the files table `T`, e.g. `` `usr_${string}` ``."
+    },
+    {
+      "subpath": "./pg",
+      "name": "toFileRecord",
+      "kind": "function",
+      "signature": "export declare function toFileRecord(row: FileRow<FilesTable>): { id: `fil_${string}`; mime: string; size: number; sha256: string | null; status: \"deleting\" | \"pending\" | \"ready\"; createdAt: string; };",
+      "jsdocSummary": "A row as clients see it: no bucket, key, owner or etag."
+    },
+    {
+      "subpath": "./s3",
+      "name": "initializeStorage",
+      "kind": "variable",
+      "signature": "export declare const initializeStorage: (bucketName?: string, optionalPathPrefix?: string, region?: string) => FileStorage;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "CleanupOptions",
+      "kind": "type",
+      "signature": "export type CleanupOptions = { batch?: number; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "CleanupResult",
+      "kind": "type",
+      "signature": "export type CleanupResult = { removed: number; failed: number; more: boolean; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FilePolicy",
+      "kind": "type",
+      "signature": "export type FilePolicy<T extends FilesTable> = { /** Default: everyone may create. */ canCreate?: (actor: OwnerOf<T>, request: UploadRequest) => boolean | Promise<boolean>; /** Default: the owner only. */ canRead?: (file: FileRow<T>, actor: OwnerOf<T>) => boolean | Promise<boolean>; /** Default: the owner only. */ canRemove?: (file: FileRow<T>, actor: OwnerOf<T>) => boolean | Promise<boolean>; };",
+      "jsdocSummary": "Who may do what. Every check gets the acting owner id."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FileRow",
+      "kind": "type",
+      "signature": "export type FileRow<T extends FilesTable> = T['$inferSelect'];",
+      "jsdocSummary": "A row of the files table `T`."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FilesDb",
+      "kind": "type",
+      "signature": "export type FilesDb = LibSQLDatabase<AnyRelations>;",
+      "jsdocSummary": "The root Drizzle database (`createLibsqlDb` from `@arki/db/libsql`). Pass the root handle, never a transaction: storage I/O must not run inside one."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "filesTable",
+      "kind": "function",
+      "signature": "export declare function filesTable<D extends Dialect, TOwner extends string>(c: ColumnKit<D>, options: FilesTableOptions<TOwner>): import(\"@arki/db/columns\").TableOf<D, string, { /** `fil_` + 24 random characters. */ id: import(\"@arki/db/columns\").ColumnSpec<D, \"id\", Omit<import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { primaryKey: true; }, \"type\"> & { type: `fil_${string}`; } & { default: true; defaultFn: true; }>; ownerId: import(\"@arki/db/columns\").ColumnSpec<D, \"id\", Omit<import(\"@arki/db/columns\").NoFlags & { notNull: true; }, \"type\"> & { type: TOwner; }>; /** The binding name from `fileStorage(..., { bucket })`, e.g. `'uploads'`. */ bucket: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** `${keyPrefix}/${id}`. Derived by the server, never sent by a client. */ key: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; mime: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; size: import(\"@arki/db/columns\").ColumnSpec<D, \"bigint\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** Lowercase hex. Only set with `verify: 'hash'`. */ sha256: import(\"@arki/db/columns\").ColumnSpec<D, \"char\", { enum: [string, ...string[]]; }>; etag: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", { enum: [string, ...string[]]; }>; status: import(\"@arki/db/columns\").ColumnSpec<D, \"text\", { enum: [\"pending\", \"ready\", \"deleting\"]; } & { notNull: true; } & { default: true; }>; /** When the PUT URL dies (database time). */ expiresAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags & { notNull: true; }>; /** When the sweep may act. Null on ready rows. */ cleanupAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags>; cleanupAttempts: import(\"@arki/db/columns\").ColumnSpec<D, \"integer\", import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { default: true; }>; createdAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags & { notNull: true; } & { default: true; }>; confirmedAt: import(\"@arki/db/columns\").ColumnSpec<D, \"instant\", import(\"@arki/db/columns\").NoFlags>; }>;",
+      "jsdocSummary": "The files table: one row per stored object, written before any byte is. No foreign key on `owner_id`: deleting an owner must not drop the row that carries the cleanup duty. The kit picks the dialect and where the table lives: `pgColumns(schema?)` or `sqliteColumns({ prefix? })`."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FilesTable",
+      "kind": "type",
+      "signature": "export type FilesTable<D extends Dialect = Dialect, TOwner extends string = string> = D extends Dialect ? ReturnType<typeof filesTable<D, TOwner>> : never;",
+      "jsdocSummary": "The files table of dialect `D` with owner ids `TOwner`. The defaults give any files table: use it as the bound of generic code, `T extends FilesTable`. Distributed over `D`, so the default is one table per dialect, never one table of a mixed dialect."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FilesTableOptions",
+      "kind": "type",
+      "signature": "export type FilesTableOptions<TOwner extends string> = { /** The owner id kind, e.g. the app's `defineId('usr_')`. Its type becomes `ownerId`'s type. */ owner: IdColumnSource<TOwner>; /** Table name. Default `'files'`. Also prefixes the constraint and index names. */ name?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "fileStorage",
+      "kind": "function",
+      "signature": "export declare function fileStorage<T extends FilesTable<'sqlite'>>(db: FilesDb, adapter: SignedUploadAdapter, options: FileStorageOptions<T>): FileStorage<T>;",
+      "jsdocSummary": "Builds the files lifecycle once, at boot. Synchronous and cheap: it only validates `options` (`ARKI_FS_E001`) and the adapter (`ARKI_FS_E006`)."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FileStorage",
+      "kind": "type",
+      "signature": "export type FileStorage<T extends FilesTable> = ReturnType<typeof createFileStorage<T>>;",
+      "jsdocSummary": "Inferred from the owned implementation; underlying Failure kinds cannot be erased."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "FileStorageOptions",
+      "kind": "type",
+      "signature": "export type FileStorageOptions<T extends FilesTable> = { files: T; /** Stable binding name stored in every row, e.g. `'uploads'`. Rows of another binding are invisible. */ bucket: string; /** Key prefix. Default `'files'`. Keys are `${keyPrefix}/${fileId}`. */ keyPrefix?: string; /** Required. `allowedMime` takes exact types and `type/*` wildcards. */ limits: { maxSize: number; allowedMime: readonly string[]; }; /** Life of a PUT URL. Default 300. */ uploadTtlSeconds?: number; /** Default life of a GET URL. Default 300. */ urlTtlSeconds?: number; /** Longest GET URL a caller may ask for; longer is rejected, never clamped. Default 3600. */ maxUrlTtlSeconds?: number; /** How long after a PUT URL expires an upload may still land. Default 900. */ graceSeconds?: number; /** `'head'` (default) checks size and type; `'hash'` also downloads the object and stores its SHA-256. */ verify?: 'head' | 'hash'; policy?: FilePolicy<T>; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "OwnerOf",
+      "kind": "type",
+      "signature": "export type OwnerOf<T extends FilesTable> = FileRow<T>['ownerId'];",
+      "jsdocSummary": "The owner id type of the files table `T`, e.g. `` `usr_${string}` ``."
+    },
+    {
+      "subpath": "./sqlite",
+      "name": "toFileRecord",
+      "kind": "function",
+      "signature": "export declare function toFileRecord(row: FileRow<FilesTable>): { id: `fil_${string}`; mime: string; size: number; sha256: string | null; status: \"deleting\" | \"pending\" | \"ready\"; createdAt: string; };",
+      "jsdocSummary": "A row as clients see it: no bucket, key, owner or etag."
+    },
+    {
+      "subpath": "./storage",
+      "name": "createLocalStorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createLocalStorageAdapter(config: LocalStorageConfig): LocalStorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "createR2Storage",
+      "kind": "function",
+      "signature": "export declare function createR2Storage(config: R2StorageConfig): import(\"./s3-adapter.js\").S3StorageAdapter;",
+      "jsdocSummary": "Create a signed-upload adapter backed by Cloudflare R2."
+    },
+    {
+      "subpath": "./storage",
+      "name": "createS3StorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createS3StorageAdapter(config: S3StorageConfig): S3StorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "createStorage",
+      "kind": "function",
+      "signature": "export declare function createStorage(config: StorageConfig): import(\"./local-adapter.js\").LocalStorageAdapter | import(\"./s3-adapter.js\").S3StorageAdapter;",
+      "jsdocSummary": "Create a storage instance based on the provided configuration"
+    },
+    {
+      "subpath": "./storage",
+      "name": "FILE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const FILE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "LocalStorageConfig",
+      "kind": "type",
+      "signature": "export type LocalStorageConfig = { provider: 'local'; basePath: string; baseUrl: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "R2StorageConfig",
+      "kind": "type",
+      "signature": "export type R2StorageConfig = { /** Cloudflare account ID — used to derive the R2 endpoint. */ accountId: string; accessKeyId: string; secretAccessKey: string; bucket: string; /** * Public base URL for objects (e.g. a custom domain or `*.r2.dev`). * Falls back to the S3 API host, which is not publicly reachable — set * this whenever objects must be served publicly. */ publicUrl?: string; /** Optional key prefix applied to every object. */ prefix?: string; };",
+      "jsdocSummary": "Storage - Cloudflare R2 Preset"
+    },
+    {
+      "subpath": "./storage",
+      "name": "S3StorageConfig",
+      "kind": "type",
+      "signature": "export type S3StorageConfig = { provider: 's3'; bucket: string; prefix?: string; region?: string; baseUrl: string; /** * Explicit endpoint for S3-compatible services (e.g. Cloudflare R2, MinIO). * Overrides the `AWS_ENDPOINT_URL` env var when provided. */ endpoint?: string; /** * Explicit credentials. When omitted, the adapter falls back to the * `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` env vars. Presets such as * `createR2Storage` inject these so app code never touches the AWS env. */ accessKeyId?: string; secretAccessKey?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "SignedUploadAdapter",
+      "kind": "type",
+      "signature": "export type SignedUploadAdapter = StorageAdapter & { readonly capabilities: { readonly signedPut: true; }; };",
+      "jsdocSummary": "A {@link StorageAdapter} whose `put` URLs are signed and enforce the `put` fields of {@link SignedUrlOptions}. The S3 and R2 adapters return this; the local adapter does not, so passing it where uploads are signed is a compile error."
+    },
+    {
+      "subpath": "./storage",
+      "name": "SignedUrlOptions",
+      "kind": "type",
+      "signature": "export type SignedUrlOptions = { signal?: AbortSignal; /** Expiry in seconds. Defaults to 3600 (1 hour). */ expiresIn?: number; /** Whether the URL is for downloading (`get`, default) or uploading (`put`). */ operation?: 'get' | 'put'; /** `Content-Disposition` hint for downloads. */ disposition?: 'inline' | 'attachment'; /** Filename to suggest in the `Content-Disposition` header. */ filename?: string; /** `put` only. Signed, so the store rejects an upload with another `Content-Type`. */ contentType?: string; /** `put` only. Signed, so the store rejects a body of another length. */ contentLength?: number; /** `put` only. Signed `If-None-Match: *`: the URL can create the object but never replace it. */ ifNoneMatch?: '*'; };",
+      "jsdocSummary": "Options for generating a presigned URL via {@link StorageAdapter.getSignedUrl}."
+    },
+    {
+      "subpath": "./storage",
+      "name": "STORAGE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": "Read/signing operations perform no external write."
+    },
+    {
+      "subpath": "./storage",
+      "name": "STORAGE_WRITE_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_WRITE_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": "Dispatched writes preserve uncertainty instead of claiming that nothing happened."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageAdapter",
+      "kind": "type",
+      "signature": "export type StorageAdapter = { /** * Store a file */ put(key: string, data: Buffer, options?: StoreOptions): Promise<StoredFile | StorageWriteFailure>; /** * Retrieve a file */ get(key: string, options?: StorageCallOptions): Promise<Buffer | null | StorageReadFailure>; /** * Delete a file */ delete(key: string, options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Delete multiple files */ deleteMany(keys: string[], options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Check if a file exists */ exists(key: string, options?: StorageCallOptions): Promise<boolean | StorageReadFailure>; /** * Get public URL for a file */ getUrl(key: string): string; /** * Generate a time-limited presigned URL for private access. * * For providers without signing support (e.g. local), this returns the * public {@link getUrl} value. */ getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string | StorageReadFailure>; /** * Get full metadata for a stored object, or `null` if it does not exist. */ getMetadata(key: string, options?: StorageCallOptions): Promise<StoredFileMetadata | null | StorageReadFailure>; /** * List files with a prefix */ list(prefix: string, options?: StorageCallOptions): Promise<string[] | StorageReadFailure>; };",
+      "jsdocSummary": "Storage adapter interface"
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageCallOptions",
+      "kind": "type",
+      "signature": "export type StorageCallOptions = { signal?: AbortSignal; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageCancelled",
+      "kind": "variable",
+      "signature": "export declare const StorageCancelled: import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>;",
+      "jsdocSummary": "Cancellation prevented the next phase or stopped a read; acknowledged earlier writes remain."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageConfig",
+      "kind": "type",
+      "signature": "export type StorageConfig = LocalStorageConfig | S3StorageConfig;",
+      "jsdocSummary": "Configuration for storage providers"
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageNotFound",
+      "kind": "variable",
+      "signature": "export declare const StorageNotFound: import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>;",
+      "jsdocSummary": "The requested local file does not exist."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageReadFailure",
+      "kind": "type",
+      "signature": "export type StorageReadFailure = FailureOf<(typeof STORAGE_READ_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageRejected",
+      "kind": "variable",
+      "signature": "export declare const StorageRejected: import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>;",
+      "jsdocSummary": "Storage explicitly refused an operation without confirming a write."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageUnavailable",
+      "kind": "variable",
+      "signature": "export declare const StorageUnavailable: import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>;",
+      "jsdocSummary": "A read could not reach its storage backend."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageWriteFailure",
+      "kind": "type",
+      "signature": "export type StorageWriteFailure = FailureOf<(typeof STORAGE_WRITE_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage",
+      "name": "StorageWriteUncertain",
+      "kind": "variable",
+      "signature": "export declare const StorageWriteUncertain: import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>;",
+      "jsdocSummary": "An external write may have happened, but its final state was not confirmed."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StoredFile",
+      "kind": "type",
+      "signature": "export type StoredFile = { key: string; size: number; url: string; contentType?: string; etag?: string; };",
+      "jsdocSummary": "Metadata about a stored file"
+    },
+    {
+      "subpath": "./storage",
+      "name": "StoredFileMetadata",
+      "kind": "type",
+      "signature": "export type StoredFileMetadata = { key: string; size: number; contentType: string; lastModified: Date; etag: string; };",
+      "jsdocSummary": "Full metadata about a stored object, as returned by {@link StorageAdapter.getMetadata}."
+    },
+    {
+      "subpath": "./storage",
+      "name": "StoreOptions",
+      "kind": "type",
+      "signature": "export type StoreOptions = { signal?: AbortSignal; contentType?: string; metadata?: Record<string, string>; cacheControl?: string; /** * Object visibility. `public` maps to a public-read ACL on S3-compatible * providers; ignored by the local adapter. Defaults to the provider/bucket * default when omitted. */ visibility?: 'public' | 'private'; };",
+      "jsdocSummary": "Options for storing a file"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "createLocalStorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createLocalStorageAdapter(config: LocalStorageConfig): LocalStorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "createR2Storage",
+      "kind": "function",
+      "signature": "export declare function createR2Storage(config: R2StorageConfig): import(\"./s3-adapter.js\").S3StorageAdapter;",
+      "jsdocSummary": "Create a signed-upload adapter backed by Cloudflare R2."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "createS3StorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createS3StorageAdapter(config: S3StorageConfig): S3StorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "createStorage",
+      "kind": "function",
+      "signature": "export declare function createStorage(config: StorageConfig): import(\"./local-adapter.js\").LocalStorageAdapter | import(\"./s3-adapter.js\").S3StorageAdapter;",
+      "jsdocSummary": "Create a storage instance based on the provided configuration"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "FILE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const FILE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "LocalStorageConfig",
+      "kind": "type",
+      "signature": "export type LocalStorageConfig = { provider: 'local'; basePath: string; baseUrl: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "R2StorageConfig",
+      "kind": "type",
+      "signature": "export type R2StorageConfig = { /** Cloudflare account ID — used to derive the R2 endpoint. */ accountId: string; accessKeyId: string; secretAccessKey: string; bucket: string; /** * Public base URL for objects (e.g. a custom domain or `*.r2.dev`). * Falls back to the S3 API host, which is not publicly reachable — set * this whenever objects must be served publicly. */ publicUrl?: string; /** Optional key prefix applied to every object. */ prefix?: string; };",
+      "jsdocSummary": "Storage - Cloudflare R2 Preset"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "S3StorageConfig",
+      "kind": "type",
+      "signature": "export type S3StorageConfig = { provider: 's3'; bucket: string; prefix?: string; region?: string; baseUrl: string; /** * Explicit endpoint for S3-compatible services (e.g. Cloudflare R2, MinIO). * Overrides the `AWS_ENDPOINT_URL` env var when provided. */ endpoint?: string; /** * Explicit credentials. When omitted, the adapter falls back to the * `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` env vars. Presets such as * `createR2Storage` inject these so app code never touches the AWS env. */ accessKeyId?: string; secretAccessKey?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "SignedUploadAdapter",
+      "kind": "type",
+      "signature": "export type SignedUploadAdapter = StorageAdapter & { readonly capabilities: { readonly signedPut: true; }; };",
+      "jsdocSummary": "A {@link StorageAdapter} whose `put` URLs are signed and enforce the `put` fields of {@link SignedUrlOptions}. The S3 and R2 adapters return this; the local adapter does not, so passing it where uploads are signed is a compile error."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "SignedUrlOptions",
+      "kind": "type",
+      "signature": "export type SignedUrlOptions = { signal?: AbortSignal; /** Expiry in seconds. Defaults to 3600 (1 hour). */ expiresIn?: number; /** Whether the URL is for downloading (`get`, default) or uploading (`put`). */ operation?: 'get' | 'put'; /** `Content-Disposition` hint for downloads. */ disposition?: 'inline' | 'attachment'; /** Filename to suggest in the `Content-Disposition` header. */ filename?: string; /** `put` only. Signed, so the store rejects an upload with another `Content-Type`. */ contentType?: string; /** `put` only. Signed, so the store rejects a body of another length. */ contentLength?: number; /** `put` only. Signed `If-None-Match: *`: the URL can create the object but never replace it. */ ifNoneMatch?: '*'; };",
+      "jsdocSummary": "Options for generating a presigned URL via {@link StorageAdapter.getSignedUrl}."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "STORAGE_READ_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_READ_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": "Read/signing operations perform no external write."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "STORAGE_WRITE_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const STORAGE_WRITE_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.invalid_input\", import(\"@standard-schema/spec\").StandardSchemaV1<unknown, { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }>>, import(\"@arki/failure\").FailureDefinition<\"schema.async_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"schema.validator_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>, import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>];",
+      "jsdocSummary": "Dispatched writes preserve uncertainty instead of claiming that nothing happened."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageAdapter",
+      "kind": "type",
+      "signature": "export type StorageAdapter = { /** * Store a file */ put(key: string, data: Buffer, options?: StoreOptions): Promise<StoredFile | StorageWriteFailure>; /** * Retrieve a file */ get(key: string, options?: StorageCallOptions): Promise<Buffer | null | StorageReadFailure>; /** * Delete a file */ delete(key: string, options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Delete multiple files */ deleteMany(keys: string[], options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Check if a file exists */ exists(key: string, options?: StorageCallOptions): Promise<boolean | StorageReadFailure>; /** * Get public URL for a file */ getUrl(key: string): string; /** * Generate a time-limited presigned URL for private access. * * For providers without signing support (e.g. local), this returns the * public {@link getUrl} value. */ getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string | StorageReadFailure>; /** * Get full metadata for a stored object, or `null` if it does not exist. */ getMetadata(key: string, options?: StorageCallOptions): Promise<StoredFileMetadata | null | StorageReadFailure>; /** * List files with a prefix */ list(prefix: string, options?: StorageCallOptions): Promise<string[] | StorageReadFailure>; };",
+      "jsdocSummary": "Storage adapter interface"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageCallOptions",
+      "kind": "type",
+      "signature": "export type StorageCallOptions = { signal?: AbortSignal; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageCancelled",
+      "kind": "variable",
+      "signature": "export declare const StorageCancelled: import(\"@arki/failure\").FailureDefinition<\"fs.storage_cancelled\", undefined>;",
+      "jsdocSummary": "Cancellation prevented the next phase or stopped a read; acknowledged earlier writes remain."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageConfig",
+      "kind": "type",
+      "signature": "export type StorageConfig = LocalStorageConfig | S3StorageConfig;",
+      "jsdocSummary": "Configuration for storage providers"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageNotFound",
+      "kind": "variable",
+      "signature": "export declare const StorageNotFound: import(\"@arki/failure\").FailureDefinition<\"fs.storage_not_found\", undefined>;",
+      "jsdocSummary": "The requested local file does not exist."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageReadFailure",
+      "kind": "type",
+      "signature": "export type StorageReadFailure = FailureOf<(typeof STORAGE_READ_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageRejected",
+      "kind": "variable",
+      "signature": "export declare const StorageRejected: import(\"@arki/failure\").FailureDefinition<\"fs.storage_rejected\", undefined>;",
+      "jsdocSummary": "Storage explicitly refused an operation without confirming a write."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageUnavailable",
+      "kind": "variable",
+      "signature": "export declare const StorageUnavailable: import(\"@arki/failure\").FailureDefinition<\"fs.storage_unavailable\", undefined>;",
+      "jsdocSummary": "A read could not reach its storage backend."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageWriteFailure",
+      "kind": "type",
+      "signature": "export type StorageWriteFailure = FailureOf<(typeof STORAGE_WRITE_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StorageWriteUncertain",
+      "kind": "variable",
+      "signature": "export declare const StorageWriteUncertain: import(\"@arki/failure\").FailureDefinition<\"fs.storage_write_uncertain\", undefined>;",
+      "jsdocSummary": "An external write may have happened, but its final state was not confirmed."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StoredFile",
+      "kind": "type",
+      "signature": "export type StoredFile = { key: string; size: number; url: string; contentType?: string; etag?: string; };",
+      "jsdocSummary": "Metadata about a stored file"
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StoredFileMetadata",
+      "kind": "type",
+      "signature": "export type StoredFileMetadata = { key: string; size: number; contentType: string; lastModified: Date; etag: string; };",
+      "jsdocSummary": "Full metadata about a stored object, as returned by {@link StorageAdapter.getMetadata}."
+    },
+    {
+      "subpath": "./storage/index",
+      "name": "StoreOptions",
+      "kind": "type",
+      "signature": "export type StoreOptions = { signal?: AbortSignal; contentType?: string; metadata?: Record<string, string>; cacheControl?: string; /** * Object visibility. `public` maps to a public-read ACL on S3-compatible * providers; ignored by the local adapter. Defaults to the provider/bucket * default when omitted. */ visibility?: 'public' | 'private'; };",
+      "jsdocSummary": "Options for storing a file"
+    },
+    {
+      "subpath": "./storage/local-adapter",
+      "name": "createLocalStorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createLocalStorageAdapter(config: LocalStorageConfig): LocalStorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/local-adapter",
+      "name": "LocalStorageAdapter",
+      "kind": "class",
+      "signature": "export declare class LocalStorageAdapter implements StorageAdapter { private readonly config; constructor(config: LocalStorageConfig); private filePath; put(key: string, data: Buffer, options?: StoreOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | { key: string; size: number; url: string; contentType: string | undefined; }>; get(key: string, options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | NonSharedBuffer | null>; delete(key: string, options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | undefined>; deleteMany(keys: string[], options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | undefined>; exists(key: string, options?: StorageCallOptions): Promise<boolean | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined>>; getUrl(key: string): string; getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined>>; getMetadata(key: string, options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined> | { key: string; size: number; contentType: string; lastModified: Date; etag: string; } | null>; list(prefix: string, options?: StorageCallOptions): Promise<string[] | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | import(\"@arki/failure\").Failure<\"schema.async_required\", undefined> | import(\"@arki/failure\").Failure<\"schema.invalid_input\", { issues: readonly import(\"@standard-schema/spec\").StandardSchemaV1.Issue[]; }> | import(\"@arki/failure\").Failure<\"schema.validator_defect\", undefined>>; }",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/r2",
+      "name": "createR2Storage",
+      "kind": "function",
+      "signature": "export declare function createR2Storage(config: R2StorageConfig): import(\"./s3-adapter.js\").S3StorageAdapter;",
+      "jsdocSummary": "Create a signed-upload adapter backed by Cloudflare R2."
+    },
+    {
+      "subpath": "./storage/r2",
+      "name": "R2StorageConfig",
+      "kind": "type",
+      "signature": "export type R2StorageConfig = { /** Cloudflare account ID — used to derive the R2 endpoint. */ accountId: string; accessKeyId: string; secretAccessKey: string; bucket: string; /** * Public base URL for objects (e.g. a custom domain or `*.r2.dev`). * Falls back to the S3 API host, which is not publicly reachable — set * this whenever objects must be served publicly. */ publicUrl?: string; /** Optional key prefix applied to every object. */ prefix?: string; };",
+      "jsdocSummary": "Storage - Cloudflare R2 Preset"
+    },
+    {
+      "subpath": "./storage/s3-adapter",
+      "name": "createS3StorageAdapter",
+      "kind": "function",
+      "signature": "export declare function createS3StorageAdapter(config: S3StorageConfig): S3StorageAdapter;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/s3-adapter",
+      "name": "S3StorageAdapter",
+      "kind": "class",
+      "signature": "export declare class S3StorageAdapter implements SignedUploadAdapter { private readonly config; readonly capabilities: { readonly signedPut: true; }; private readonly client; constructor(config: S3StorageConfig); put(key: string, data: Buffer, options?: StoreOptions): Promise<import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | { key: string; size: number; url: string; contentType: string | undefined; etag: string | undefined; }>; get(key: string, options?: StorageCallOptions): Promise<Buffer<ArrayBuffer> | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | null>; delete(key: string, options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | undefined>; deleteMany(keys: string[], options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | undefined>; exists(key: string, options?: StorageCallOptions): Promise<boolean | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>; getUrl(key: string): string; getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>; getMetadata(key: string, options?: StorageCallOptions): Promise<import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined> | { key: string; size: number; contentType: string; lastModified: Date; etag: string; } | null>; list(prefix: string, options?: StorageCallOptions): Promise<string[] | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>; private getFullKey; }",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "LocalStorageConfig",
+      "kind": "type",
+      "signature": "export type LocalStorageConfig = { provider: 'local'; basePath: string; baseUrl: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "S3StorageConfig",
+      "kind": "type",
+      "signature": "export type S3StorageConfig = { provider: 's3'; bucket: string; prefix?: string; region?: string; baseUrl: string; /** * Explicit endpoint for S3-compatible services (e.g. Cloudflare R2, MinIO). * Overrides the `AWS_ENDPOINT_URL` env var when provided. */ endpoint?: string; /** * Explicit credentials. When omitted, the adapter falls back to the * `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` env vars. Presets such as * `createR2Storage` inject these so app code never touches the AWS env. */ accessKeyId?: string; secretAccessKey?: string; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "SignedUploadAdapter",
+      "kind": "type",
+      "signature": "export type SignedUploadAdapter = StorageAdapter & { readonly capabilities: { readonly signedPut: true; }; };",
+      "jsdocSummary": "A {@link StorageAdapter} whose `put` URLs are signed and enforce the `put` fields of {@link SignedUrlOptions}. The S3 and R2 adapters return this; the local adapter does not, so passing it where uploads are signed is a compile error."
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "SignedUrlOptions",
+      "kind": "type",
+      "signature": "export type SignedUrlOptions = { signal?: AbortSignal; /** Expiry in seconds. Defaults to 3600 (1 hour). */ expiresIn?: number; /** Whether the URL is for downloading (`get`, default) or uploading (`put`). */ operation?: 'get' | 'put'; /** `Content-Disposition` hint for downloads. */ disposition?: 'inline' | 'attachment'; /** Filename to suggest in the `Content-Disposition` header. */ filename?: string; /** `put` only. Signed, so the store rejects an upload with another `Content-Type`. */ contentType?: string; /** `put` only. Signed, so the store rejects a body of another length. */ contentLength?: number; /** `put` only. Signed `If-None-Match: *`: the URL can create the object but never replace it. */ ifNoneMatch?: '*'; };",
+      "jsdocSummary": "Options for generating a presigned URL via {@link StorageAdapter.getSignedUrl}."
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StorageAdapter",
+      "kind": "type",
+      "signature": "export type StorageAdapter = { /** * Store a file */ put(key: string, data: Buffer, options?: StoreOptions): Promise<StoredFile | StorageWriteFailure>; /** * Retrieve a file */ get(key: string, options?: StorageCallOptions): Promise<Buffer | null | StorageReadFailure>; /** * Delete a file */ delete(key: string, options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Delete multiple files */ deleteMany(keys: string[], options?: StorageCallOptions): Promise<void | StorageWriteFailure>; /** * Check if a file exists */ exists(key: string, options?: StorageCallOptions): Promise<boolean | StorageReadFailure>; /** * Get public URL for a file */ getUrl(key: string): string; /** * Generate a time-limited presigned URL for private access. * * For providers without signing support (e.g. local), this returns the * public {@link getUrl} value. */ getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string | StorageReadFailure>; /** * Get full metadata for a stored object, or `null` if it does not exist. */ getMetadata(key: string, options?: StorageCallOptions): Promise<StoredFileMetadata | null | StorageReadFailure>; /** * List files with a prefix */ list(prefix: string, options?: StorageCallOptions): Promise<string[] | StorageReadFailure>; };",
+      "jsdocSummary": "Storage adapter interface"
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StorageCallOptions",
+      "kind": "type",
+      "signature": "export type StorageCallOptions = { signal?: AbortSignal; };",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StorageConfig",
+      "kind": "type",
+      "signature": "export type StorageConfig = LocalStorageConfig | S3StorageConfig;",
+      "jsdocSummary": "Configuration for storage providers"
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StorageReadFailure",
+      "kind": "type",
+      "signature": "export type StorageReadFailure = FailureOf<(typeof STORAGE_READ_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StorageWriteFailure",
+      "kind": "type",
+      "signature": "export type StorageWriteFailure = FailureOf<(typeof STORAGE_WRITE_FAILURES)[number]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StoredFile",
+      "kind": "type",
+      "signature": "export type StoredFile = { key: string; size: number; url: string; contentType?: string; etag?: string; };",
+      "jsdocSummary": "Metadata about a stored file"
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StoredFileMetadata",
+      "kind": "type",
+      "signature": "export type StoredFileMetadata = { key: string; size: number; contentType: string; lastModified: Date; etag: string; };",
+      "jsdocSummary": "Full metadata about a stored object, as returned by {@link StorageAdapter.getMetadata}."
+    },
+    {
+      "subpath": "./storage/types",
+      "name": "StoreOptions",
+      "kind": "type",
+      "signature": "export type StoreOptions = { signal?: AbortSignal; contentType?: string; metadata?: Record<string, string>; cacheControl?: string; /** * Object visibility. `public` maps to a public-read ACL on S3-compatible * providers; ignored by the local adapter. Defaults to the provider/bucket * default when omitted. */ visibility?: 'public' | 'private'; };",
+      "jsdocSummary": "Options for storing a file"
+    },
+    {
+      "subpath": "./testing",
+      "name": "memoryUploadAdapter",
+      "kind": "function",
+      "signature": "export declare function memoryUploadAdapter(): { capabilities: { signedPut: true; }; put(key: string, data: Buffer, options?: StoreOptions): Promise<StoredFile>; get(key: string): Promise<Buffer | null>; delete(key: string): Promise<void>; deleteMany(keys: string[]): Promise<void>; exists(key: string): Promise<boolean>; getUrl: typeof getUrl; getSignedUrl(key: string, options?: SignedUrlOptions): Promise<string>; getMetadata(key: string): Promise<StoredFileMetadata | null>; list(prefix: string): Promise<string[]>; browserPut(url: string, body: Uint8Array, headers: Record<string, string>): Promise<Response>; };",
+      "jsdocSummary": "An in-memory store with signed uploads. One instance per test."
+    },
+    {
+      "subpath": "./testing",
+      "name": "MemoryUploadAdapter",
+      "kind": "type",
+      "signature": "export type MemoryUploadAdapter = ReturnType<typeof memoryUploadAdapter>;",
+      "jsdocSummary": ""
+    }
+  ],
+  "groups": [],
+  "errorCodes": [
+    "ARKI_FS_E001",
+    "ARKI_FS_E006",
+    "fs.file_unavailable",
+    "fs.file_wrong_state",
+    "fs.storage_cancelled",
+    "fs.storage_not_found",
+    "fs.storage_rejected",
+    "fs.storage_unavailable",
+    "fs.storage_write_uncertain",
+    "fs.upload_mismatch",
+    "fs.upload_pending"
+  ]
+}

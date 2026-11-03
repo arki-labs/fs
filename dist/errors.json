@@ -1,0 +1,101 @@
+[
+  {
+    "code": "ARKI_FS_E001",
+    "package": "@arki/fs",
+    "kind": "thrown",
+    "what": "Bad input or config: TTL over the cap, size over the limit, mime not allowed.",
+    "fix": "Correct the requested TTL, file size, MIME type or storage configuration to match the configured limits.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/errors.ts:16"
+  },
+  {
+    "code": "ARKI_FS_E006",
+    "package": "@arki/fs",
+    "kind": "thrown",
+    "what": "The adapter cannot sign uploads (the local adapter).",
+    "fix": "Use an adapter supporting signed uploads, or upload through the local adapter supported path.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/errors.ts:21"
+  },
+  {
+    "code": "fs.file_unavailable",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "The file is missing, belongs to another bucket binding, or the policy denied the call. One failure for all three on purpose, so a caller cannot probe which files exist; the debug log says which it was. `fileId` is the id the caller asked for, and is absent when the policy refused a new upload.",
+    "fix": "Check the file id and that this user may use the file.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/failures.ts:24"
+  },
+  {
+    "code": "fs.file_wrong_state",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "The file is not in the state the call needs: a URL for a file that is not ready, a confirm on a file being deleted, or a confirm after the window passed. The debug log says which.",
+    "fix": "Confirm a pending upload before you ask for its URL; a deleted or expired upload needs a new upload.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/failures.ts:52"
+  },
+  {
+    "code": "fs.storage_cancelled",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "Cancellation prevented the next phase or stopped a read; acknowledged earlier writes remain.",
+    "fix": "Respect cancellation and reconcile earlier upload tickets or durable rows before another attempt.",
+    "verify": "bun run test -- src/storage/outcomes.test.ts",
+    "source": "src/storage/failures.ts:48"
+  },
+  {
+    "code": "fs.storage_not_found",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "The requested local file does not exist.",
+    "fix": "Correct the filename or create the file before reading it.",
+    "verify": "bun run test -- src/local/read-first-line.test.ts",
+    "source": "src/storage/failures.ts:8"
+  },
+  {
+    "code": "fs.storage_rejected",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "Storage explicitly refused an operation without confirming a write.",
+    "fix": "Correct permissions, the object key or the provider request.",
+    "verify": "bun run test -- src/storage/outcomes.test.ts",
+    "source": "src/storage/failures.ts:28"
+  },
+  {
+    "code": "fs.storage_unavailable",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "A read could not reach its storage backend.",
+    "fix": "Restore connectivity or filesystem availability before choosing a new attempt.",
+    "verify": "bun run test -- src/storage/outcomes.test.ts",
+    "source": "src/storage/failures.ts:18"
+  },
+  {
+    "code": "fs.storage_write_uncertain",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "An external write may have happened, but its final state was not confirmed.",
+    "fix": "Reconcile the object or durable file row before retrying; cancellation does not undo a write.",
+    "verify": "bun run test -- src/storage/outcomes.test.ts",
+    "source": "src/storage/failures.ts:38"
+  },
+  {
+    "code": "fs.upload_mismatch",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "The stored size, type or hash differs from the upload request. The row is now deleting.",
+    "fix": "Upload the file again, with the size and type the upload request declared.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/failures.ts:63"
+  },
+  {
+    "code": "fs.upload_pending",
+    "package": "@arki/fs",
+    "kind": "failure",
+    "what": "Confirm came before the PUT finished. The row stays pending, so confirming again later is fine.",
+    "fix": "Finish the PUT to the ticket URL, then confirm again.",
+    "verify": "bun run test -- src/files/files.test.ts",
+    "source": "src/files/failures.ts:38"
+  }
+]

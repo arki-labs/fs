@@ -1,0 +1,1 @@
+{"version":3,"file":"cleanup.d.ts","sourceRoot":"","sources":["../../../src/sqlite/cleanup.ts"],"names":[],"mappings":"AAMA,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,uBAAuB,CAAC;AACxD,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,cAAc,CAAC;AAG5C;;;;;;;;;;GAUG;AACH,wBAAsB,QAAQ,CAAC,EAAE,EAAE,OAAO,EAAE,KAAK,EAAE,UAAU,CAAC,QAAQ,CAAC,EAAE,MAAM,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM;;;KAoBrG"}
