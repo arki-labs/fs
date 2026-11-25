@@ -1,6 +1,6 @@
 import { context, metrics, SpanStatusCode, trace } from '@opentelemetry/api';
 import { z } from 'zod';
-import { isFailure, UnexpectedDefect } from '@arki/failure';
+import { isFailure, isFault, UnexpectedDefect } from '@arki/failure';
 import { StorageCancelled, StorageRejected, StorageUnavailable, StorageWriteUncertain } from './failures.js';
 /** Source schema for error facts at the provider boundary, including Drizzle's cause envelope. */
 const errorFacts = z.object({
@@ -100,43 +100,84 @@ function report(run) {
         /* Reporting cannot own the operation. */
     }
 }
-/** No paths, keys, URLs, names or private causes are reported. SDKs remain application-owned. */
-export async function observeFs(operation, run) {
+function startFsSpan(operation) {
     let span;
-    let execution;
-    const execute = () => (execution ??= Promise.resolve().then(run));
-    const started = performance.now();
     report(() => {
         span = trace.getTracer('@arki/fs').startSpan(operation);
     });
+    return span;
+}
+/** Every failure sets `failure.code`; only a fault (a throw, or a returned 5xx) sets error status. */
+function finishFs(operation, span, started, code, fault) {
+    if (code) {
+        const failureCode = code;
+        report(() => span?.setAttribute('failure.code', failureCode));
+        if (fault)
+            report(() => span?.setStatus({ code: SpanStatusCode.ERROR }));
+    }
+    report(() => span?.end());
+    // Metrics use the same bounded operation names and failure codes as the spans.
+    report(() => {
+        const meter = metrics.getMeter('@arki/fs');
+        const attributes = { operation, 'failure.code': code ?? 'none' };
+        meter.createCounter('fs.operations').add(1, attributes);
+        meter
+            .createHistogram('fs.operation.duration', { unit: 's' })
+            .record((performance.now() - started) / 1000, attributes);
+    });
+}
+/** No paths, keys, URLs, names or private causes are reported. SDKs remain application-owned. */
+export async function observeFs(operation, run) {
+    let execution;
+    const execute = () => (execution ??= Promise.resolve().then(run));
+    const started = performance.now();
+    const span = startFsSpan(operation);
     report(() => span && context.with(trace.setSpan(context.active(), span), execute));
     let code;
+    let fault = false;
     try {
         const result = await execute();
-        if (isFailure(result))
+        if (isFailure(result)) {
             code = result.code;
+            fault = isFault(result);
+        }
         return result;
     }
     catch (error) {
         code = UnexpectedDefect.code;
+        fault = true;
         throw error;
     }
     finally {
-        if (code) {
-            const failureCode = code;
-            report(() => span?.setAttribute('failure.code', failureCode));
-            report(() => span?.setStatus({ code: SpanStatusCode.ERROR }));
+        finishFs(operation, span, started, code, fault);
+    }
+}
+/** The synchronous twin of {@link observeFs}: the same span, metrics and failure code for a sync operation. */
+export function observeFsSync(operation, run) {
+    const started = performance.now();
+    const span = startFsSpan(operation);
+    let active = context.active();
+    report(() => {
+        if (span)
+            active = trace.setSpan(context.active(), span);
+    });
+    let code;
+    let fault = false;
+    try {
+        const result = context.with(active, run);
+        if (isFailure(result)) {
+            code = result.code;
+            fault = isFault(result);
         }
-        report(() => span?.end());
-        // Metrics use the same bounded operation names and failure codes as the spans.
-        report(() => {
-            const meter = metrics.getMeter('@arki/fs');
-            const attributes = { operation, 'failure.code': code ?? 'none' };
-            meter.createCounter('fs.operations').add(1, attributes);
-            meter
-                .createHistogram('fs.operation.duration', { unit: 's' })
-                .record((performance.now() - started) / 1000, attributes);
-        });
+        return result;
+    }
+    catch (error) {
+        code = UnexpectedDefect.code;
+        fault = true;
+        throw error;
+    }
+    finally {
+        finishFs(operation, span, started, code, fault);
     }
 }
 /** The operation owns otherwise unclassified policy, observer and implementation throws. */

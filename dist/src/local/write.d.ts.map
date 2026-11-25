@@ -1,1 +1,1 @@
-{"version":3,"file":"write.d.ts","sourceRoot":"","sources":["../../../src/local/write.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AACH,OAAO,EAAE,UAAU,IAAI,iBAAiB,EAAE,MAAM,kBAAkB,CAAC"}
+{"version":3,"file":"write.d.ts","sourceRoot":"","sources":["../../../src/local/write.ts"],"names":[],"mappings":"AAMA;;;;GAIG;AACH,wBAAgB,iBAAiB,CAAC,UAAU,EAAE,MAAM,EAAE,IAAI,EAAE,MAAM,GAAG,UAAU,qKAY9E"}

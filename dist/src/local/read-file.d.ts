@@ -1,9 +1,10 @@
 /**
- * Reads a whole file synchronously and decodes it. This is a load-time reader (bundled data files), so it keeps
- * a documented throw instead of returning a failure.
- *
- * @throws The Node system error (`ENOENT`, `EACCES`, ...) when the file cannot be read, or the iconv-lite
- * error when `encoding` is unknown.
+ * Reads a whole file and decodes it with `encoding` (`utf8`, `latin1`, `win1252`, any iconv-lite name).
+ * Returns the text, or a failure: `StorageNotFound` for a missing path, `StorageRejected` for an unknown
+ * encoding or a refused read (`EACCES`, a directory), `StorageUnavailable` for an I/O fault and
+ * `StorageCancelled` when `signal` aborts.
  */
-export declare const readFile: (pathToFile: string, encoding: string) => string;
+export declare const readFile: (pathToFile: string, encoding: string, options?: {
+    signal?: AbortSignal;
+}) => Promise<string | import("@arki/failure").Failure<"failure.unexpected_defect", undefined> | import("@arki/failure").Failure<"fs.storage_cancelled", undefined> | import("@arki/failure").Failure<"fs.storage_not_found", undefined> | import("@arki/failure").Failure<"fs.storage_rejected", undefined> | import("@arki/failure").Failure<"fs.storage_unavailable", undefined>>;
 //# sourceMappingURL=read-file.d.ts.map

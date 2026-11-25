@@ -1,6 +1,6 @@
 {
   "package": "@arki/fs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "entries": [
     {
       "subpath": "./env",
@@ -272,15 +272,15 @@
       "subpath": "./local/delete",
       "name": "deleteAsync",
       "kind": "function",
-      "signature": "export function deleteAsync( patterns: string | readonly string[], options?: Options ): Promise<string[]>;",
-      "jsdocSummary": "Delete files and directories using glob patterns."
+      "signature": "export declare function deleteAsync(patterns: string | readonly string[], options?: Options): Promise<string[] | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined>>;",
+      "jsdocSummary": "Deletes the files and directories that match `patterns` (the `del` package). Returns the deleted paths, or a failure: `StorageRejected` for a path outside the working directory (pass `force: true` or a `cwd`), a permission error or a read-only file system; `StorageWriteUncertain` when some paths may already be gone."
     },
     {
       "subpath": "./local/delete",
       "name": "deleteSync",
       "kind": "function",
-      "signature": "export function deleteSync( patterns: string | readonly string[], options?: Options ): string[];",
-      "jsdocSummary": "Synchronously delete files and directories using glob patterns."
+      "signature": "export declare function deleteSync(patterns: string | readonly string[], options?: Options): string[] | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined>;",
+      "jsdocSummary": "The synchronous form of {@link deleteAsync}: the same paths, failures, span and metric."
     },
     {
       "subpath": "./local/delete",
@@ -293,8 +293,8 @@
       "subpath": "./local/delete",
       "name": "ProgressData",
       "kind": "type",
-      "signature": "export type ProgressData = { /** Deleted files and directories count. */ readonly deletedCount: number; /** Total files and directories count. */ readonly totalCount: number; /** Completed percentage. A value between `0` and `1`. */ readonly percent: number; /** The absolute path of the deleted file or directory. It will not be present if nothing was deleted. */ readonly path?: string; };",
-      "jsdocSummary": ""
+      "signature": "export type ProgressData = DelProgressData;",
+      "jsdocSummary": "The progress `del` reports to `options.onProgress` after each deleted path."
     },
     {
       "subpath": "./local/dir",
@@ -306,30 +306,37 @@
     {
       "subpath": "./local/glob",
       "name": "glob",
-      "kind": "variable",
-      "signature": "export declare const glob: typeof glob_ & { glob: typeof glob_; globSync: typeof globSync; sync: typeof globSync & { stream: typeof globStreamSync; iterate: typeof globIterateSync; }; globStream: typeof globStream; stream: typeof globStream & { sync: typeof globStreamSync; }; globStreamSync: typeof globStreamSync; streamSync: typeof globStreamSync; globIterate: typeof globIterate; iterate: typeof globIterate & { sync: typeof globIterateSync; }; globIterateSync: typeof globIterateSync; iterateSync: typeof globIterateSync; Glob: typeof Glob; hasMagic: (pattern: string | string[], options?: GlobOptions) => boolean; escape: (s: string, { windowsPathsNoEscape, magicalBraces, }?: Pick<import(\"minimatch\").MinimatchOptions, \"windowsPathsNoEscape\" | \"magicalBraces\">) => string; unescape: (s: string, { windowsPathsNoEscape, magicalBraces, }?: Pick<import(\"minimatch\").MinimatchOptions, \"windowsPathsNoEscape\" | \"magicalBraces\">) => string; };",
-      "jsdocSummary": ""
+      "kind": "function",
+      "signature": "export declare function glob(pattern: string | string[], options?: GlobOptionsWithFileTypesFalse): Promise<string[] | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>;",
+      "jsdocSummary": "Lists the paths that match `pattern` (the `glob` package). Unreadable directories are skipped and a missing directory gives no matches. Returns the paths, or a failure: `StorageCancelled` when `options.signal` aborts, and `UnexpectedDefect` for an invalid option set (for example `matchBase` with `noglobstar`)."
     },
     {
       "subpath": "./local/glob",
       "name": "globIterate",
       "kind": "function",
-      "signature": "export declare function globIterate(pattern: string | string[], options?: GlobOptionsWithFileTypesUnset | undefined): AsyncGenerator<string, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptionsWithFileTypesTrue): AsyncGenerator<Path, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptionsWithFileTypesFalse): AsyncGenerator<string, void, void>; ; export declare function globIterate(pattern: string | string[], options: GlobOptions): AsyncGenerator<Path, void, void> | AsyncGenerator<string, void, void>;",
-      "jsdocSummary": "Return an async iterator for walking glob pattern matches."
+      "signature": "export declare function globIterate(pattern: string | string[], options?: GlobOptionsWithFileTypesFalse): AsyncGenerator<string, GlobFailure | undefined, undefined>;",
+      "jsdocSummary": "Yields the matching paths one at a time. It never throws: the generator's return value is `undefined` when the walk finished, or the same failure `glob` returns. The span covers the whole walk and ends early when the caller stops iterating."
+    },
+    {
+      "subpath": "./local/glob",
+      "name": "GlobOptionsWithFileTypesFalse",
+      "kind": "type",
+      "signature": "export type GlobOptionsWithFileTypesFalse = GlobOptions & { withFileTypes?: false; };",
+      "jsdocSummary": ""
     },
     {
       "subpath": "./local/glob",
       "name": "globStream",
       "kind": "function",
-      "signature": "export declare function globStream(pattern: string | string[], options: GlobOptionsWithFileTypesFalse): Minipass<string, string>; ; export declare function globStream(pattern: string | string[], options: GlobOptionsWithFileTypesTrue): Minipass<Path, Path>; ; export declare function globStream(pattern: string | string[], options?: GlobOptionsWithFileTypesUnset | undefined): Minipass<string, string>; ; export declare function globStream(pattern: string | string[], options: GlobOptions): Minipass<Path, Path> | Minipass<string, string>;",
-      "jsdocSummary": "Return a stream that emits all the strings or `Path` objects and then emits `end` when completed."
+      "signature": "export declare function globStream(pattern: string | string[], options?: GlobOptionsWithFileTypesFalse): import(\"node:stream/web\").ReadableStream<string | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>;",
+      "jsdocSummary": "The matching paths as a web `ReadableStream`. It never errors: a failure arrives as the last chunk, the same failure `glob` returns, and then the stream closes. Cancelling the stream stops the walk."
     },
     {
       "subpath": "./local/read-file",
       "name": "readFile",
       "kind": "variable",
-      "signature": "export declare const readFile: (pathToFile: string, encoding: string) => string;",
-      "jsdocSummary": "Reads a whole file synchronously and decodes it. This is a load-time reader (bundled data files), so it keeps a documented throw instead of returning a failure."
+      "signature": "export declare const readFile: (pathToFile: string, encoding: string, options?: { signal?: AbortSignal; }) => Promise<string | import(\"@arki/failure\").Failure<\"failure.unexpected_defect\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_cancelled\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_not_found\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_unavailable\", undefined>>;",
+      "jsdocSummary": "Reads a whole file and decodes it with `encoding` (`utf8`, `latin1`, `win1252`, any iconv-lite name). Returns the text, or a failure: `StorageNotFound` for a missing path, `StorageRejected` for an unknown encoding or a refused read (`EACCES`, a directory), `StorageUnavailable` for an I/O fault and `StorageCancelled` when `signal` aborts."
     },
     {
       "subpath": "./local/read-first-line",
@@ -342,8 +349,8 @@
       "subpath": "./local/write",
       "name": "writeToTheFileEnd",
       "kind": "function",
-      "signature": "function appendFile( path: PathLike | FileHandle, data: | string | NodeJS.ArrayBufferView | Iterable<string | NodeJS.ArrayBufferView> | AsyncIterable<string | NodeJS.ArrayBufferView>, options?: (ObjectEncodingOptions & FlagAndOpenMode & { flush?: boolean | undefined }) | BufferEncoding | null, ): Promise<void>;",
-      "jsdocSummary": "Asynchronously append data to a file, creating the file if it does not yet exist. `data` can be a string or a `Buffer`."
+      "signature": "export declare function writeToTheFileEnd(pathToFile: string, data: string | Uint8Array): Promise<import(\"@arki/failure\").Failure<\"fs.storage_rejected\", undefined> | import(\"@arki/failure\").Failure<\"fs.storage_write_uncertain\", undefined> | undefined>;",
+      "jsdocSummary": "Appends `data` to the end of a file, creating the file when it is missing. Returns nothing on success, or a failure: `StorageRejected` when nothing was written (a missing directory, `EACCES`, a read-only file system) and `StorageWriteUncertain` when the append may have partly happened (`ENOSPC`, an I/O fault)."
     },
     {
       "subpath": "./orpc",
@@ -469,7 +476,7 @@
       "name": "initializeStorage",
       "kind": "variable",
       "signature": "export declare const initializeStorage: (bucketName?: string, optionalPathPrefix?: string, region?: string) => FileStorage;",
-      "jsdocSummary": ""
+      "jsdocSummary": "Build the Flystorage handle inside an `fs.s3.initialize_storage` span; a throw marks it `UnexpectedDefect`."
     },
     {
       "subpath": "./sqlite",

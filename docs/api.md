@@ -8,7 +8,9 @@ Every exported value, grouped by import path. Types are not listed. For how the 
 
 ## @arki/fs/local/delete
 
-- Re-exports everything from the `del` package (`deleteAsync`, `deleteSync`). They remove files and folders by glob.
+- `deleteAsync`: deletes the files and folders that match a glob (the `del` package) and returns the deleted paths, or `StorageRejected` (outside the working directory, permission denied) or `StorageWriteUncertain`.
+- `deleteSync`: the synchronous `deleteAsync`, with the same paths and failures.
+- Types: `Options` (the `del` options) and `ProgressData` (what `onProgress` receives: `deletedCount`, `totalCount`, `percent`, `path`).
 
 ## @arki/fs/local/dir
 
@@ -16,13 +18,13 @@ Every exported value, grouped by import path. Types are not listed. For how the 
 
 ## @arki/fs/local/glob
 
-- `glob`: finds files that match a pattern and returns them in one list.
-- `globIterate`: finds matching files and yields them one at a time.
-- `globStream`: finds matching files and returns them as a stream.
+- `glob`: finds files that match a pattern and returns them in one list, or `StorageCancelled` when its signal aborts and `UnexpectedDefect` for an invalid option set.
+- `globIterate`: an async generator that yields the matching paths one at a time. It never throws; its return value is `undefined` when the walk finished, or the same failure `glob` returns.
+- `globStream`: the matching paths as a web `ReadableStream`. It never errors; a failure arrives as the last chunk, then the stream closes.
 
 ## @arki/fs/local/read-file
 
-- `readFile`: reads a whole file synchronously and decodes it. It is a load-time reader for bundled data files, so it keeps a documented throw instead of returning a failure.
+- `readFile`: reads a whole file and decodes it. Resolves to the text, or `StorageNotFound` for a missing path, `StorageRejected` for an unknown encoding or a refused read, `StorageUnavailable` or `StorageCancelled`.
 
 ## @arki/fs/local/read-first-line
 
@@ -30,7 +32,7 @@ Every exported value, grouped by import path. Types are not listed. For how the 
 
 ## @arki/fs/local/write
 
-- `writeToTheFileEnd`: appends data to the end of a file (Node `appendFile`).
+- `writeToTheFileEnd`: appends data to the end of a file (Node `appendFile`). Resolves to nothing, or `StorageRejected` when nothing was written (missing folder, permission denied) and `StorageWriteUncertain` when the append may have partly happened.
 
 ## @arki/fs/s3
 
